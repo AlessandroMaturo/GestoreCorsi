@@ -7,14 +7,14 @@ public class Corso {
 	private String codins;
 	private Integer crediti;
 	private String nome;
-	private Integer db;
+	private Integer pb;
 	
 	public Corso(String codins, Integer crediti, String nome, Integer db) {
 		super();
 		this.codins = codins;
 		this.crediti = crediti;
 		this.nome = nome;
-		this.db = db;
+		this.pb = db;
 	}
 
 	public String getCodins() {
@@ -42,11 +42,11 @@ public class Corso {
 	}
 
 	public Integer getDb() {
-		return db;
+		return pb;
 	}
 
 	public void setDb(Integer db) {
-		this.db = db;
+		this.pb = db;
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class Corso {
 
 	@Override
 	public String toString() {
-		return "Corso [codins=" + codins + ", crediti=" + crediti + ", nome=" + nome + ", db=" + db + "]";
+		return "Corso [codins=" + codins + ", crediti=" + crediti + ", nome=" + nome + ", db=" + pb + "]";
 	}
 
 

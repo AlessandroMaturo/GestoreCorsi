@@ -5,11 +5,15 @@
 package it.polito.tdp.corsi;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.corsi.model.Corso;
+import it.polito.tdp.corsi.model.Divisione;
 import it.polito.tdp.corsi.model.Model;
+import it.polito.tdp.corsi.model.Studente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -74,17 +78,66 @@ public class FXMLController {
 
     @FXML
     void numeroStudenti(ActionEvent event) {
+    	txtRisultato.clear();
+    	String periodo = txtPeriodo.getText();
+    	int periodoNumerico;
+    	
+    	try {
+    		periodoNumerico= Integer.parseInt(periodo);
+    	} catch (NumberFormatException e) {
+    		txtRisultato.setText("Inserisci un periodo numerico!");
+    		e.printStackTrace();
+    		return; //IMPORTANTE
+    	}
+    	
+    	if(periodoNumerico<1 || periodoNumerico>2) {
+    		txtRisultato.setText("Inserisci 1 o 2!");
+    	}
+    	
+    	Map<Corso,Integer> iscritti = this.model.getIscritti(periodoNumerico);
+    	for(Corso ci : iscritti.keySet()) {
+    		txtRisultato.appendText(ci + " " + iscritti.get(ci)+ "\n");
+    	}
     	
     }
 
     @FXML
     void stampaDivisione(ActionEvent event) {
-
+    	
+    	String codins = txtCorso.getText();
+    	
+    	if(codins == null || codins.compareTo("")==0) {
+    		txtRisultato.appendText("Perfavore inserisci un codice di un corso!");
+    		return;
+    	}
+    	
+    	//TODO Controllo che il corso esista
+    	
+    	List<Divisione> ris = this.model.getDivisioneStudenti(codins);
+    	
+    	Collections.sort(ris);
+    	
+    	for(Divisione di: ris) {
+    		txtRisultato.appendText(di.toString()+"\n");
+    	}
+    	
     }
 
     @FXML
     void stampaStudenti(ActionEvent event) {
-
+    	
+    	String codins = txtCorso.getText();
+    	
+    	if(codins == null || codins.compareTo("")==0) {
+    		txtRisultato.appendText("Perfavore inserisci un codice di un corso!");
+    		return;
+    	}
+    	
+    	//TODO Controllo che il corso esista
+    	
+    	for(Studente si: this.model.getStudentiByCorso(codins)) {
+    		txtRisultato.appendText(si.toString()+"\n");
+    	}
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
